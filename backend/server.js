@@ -10,6 +10,7 @@ import authRoutes from "./routes/authRoutes.js";
 dotenv.config();
 
 const app = express();
+const cors = require("cors");
 
 /* ================= MIDDLEWARE ================= */
 
