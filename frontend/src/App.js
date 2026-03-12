@@ -14,7 +14,7 @@ import emailjs from "@emailjs/browser";
 
 function App() {
 
-const API = "http://https://mern-stack-qrcp.onrender.com/api";
+const API = "https://mern-stack-qrcp.onrender.com/api";
 
 /* ================= AUTH ================= */
 

@@ -22,7 +22,7 @@ setLoading(true);
 try{
 
 await axios.post(
-"http://https://mern-stack-qrcp.onrender.com/api/auth/register",
+"https://mern-stack-qrcp.onrender.com/api/auth/register",
 { name,email,password }
 );
 

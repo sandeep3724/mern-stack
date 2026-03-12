@@ -19,7 +19,7 @@ setLoading(true);
 try {
 
 const res = await axios.post(
-"http://https://mern-stack-qrcp.onrender.com/api/auth/login",
+"https://mern-stack-qrcp.onrender.com/api/auth/login",
 {
 email,
 password

@@ -26,7 +26,7 @@ Legend
 
 function AdminDashboard(){
 
-const API = "http://https://mern-stack-qrcp.onrender.com/api";
+const API = "https://mern-stack-qrcp.onrender.com/api";
 
 const [products,setProducts] = useState([]);
 const [orders,setOrders] = useState([]);
