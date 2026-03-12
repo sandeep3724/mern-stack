@@ -265,9 +265,13 @@ return;
 }
 
 const orderData = {
-items: cart,
-totalAmount,
-email
+ items: cart.map(item=>({
+   name:item.name,
+   price:item.price,
+   quantity:item.quantity
+ })),
+ totalAmount,
+ email
 };
 
 try{
