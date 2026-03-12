@@ -11,7 +11,8 @@ const {items,totalAmount} = req.body;
 
 const order = new Order({
 items,
-totalAmount
+totalAmount,
+email
 });
 
 await order.save();

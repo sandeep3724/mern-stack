@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-/* ================= ORDER ITEM SCHEMA ================= */
-
 const orderItemSchema = new mongoose.Schema({
   name:{
     type:String,
@@ -11,18 +9,12 @@ const orderItemSchema = new mongoose.Schema({
     type:Number,
     required:true
   },
-  email:{
-    type:String,
-    required:true
-  },  
   quantity:{
     type:Number,
     required:true,
     min:1
   }
 });
-
-/* ================= ORDER SCHEMA ================= */
 
 const orderSchema = new mongoose.Schema({
 
@@ -36,6 +28,11 @@ const orderSchema = new mongoose.Schema({
     required:true
   },
 
+  email:{                 // ✅ move here
+    type:String,
+    required:true
+  },
+
   status:{
     type:String,
     enum:["Pending","Preparing","Delivered"],
@@ -45,7 +42,5 @@ const orderSchema = new mongoose.Schema({
 },{
   timestamps:true
 });
-
-/* ================= MODEL ================= */
 
 module.exports = mongoose.model("Order",orderSchema);
