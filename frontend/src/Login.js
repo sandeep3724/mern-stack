@@ -7,78 +7,61 @@ function Login({ setIsLoggedIn }) {
 
 const navigate = useNavigate();
 
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const [loading, setLoading] = useState(false);
+const [email,setEmail] = useState("");
+const [password,setPassword] = useState("");
+const [loading,setLoading] = useState(false);
 
-const handleSubmit = async (e) => {
+const handleSubmit = async(e)=>{
 
 e.preventDefault();
+
 setLoading(true);
 
-try {
+try{
 
 const res = await axios.post(
 "https://mern-stack-qrcp.onrender.com/api/auth/login",
-{
-email,
-password
-}
+{ email,password }
 );
 
-/* ================= STORE AUTH ================= */
-
-const token = res.data.token;
-const role = res.data.user?.role;
-
-localStorage.setItem("token", token);
-localStorage.setItem("role", role);
-
-/* ================= SUCCESS ================= */
+localStorage.setItem("token",res.data.token);
+localStorage.setItem("role",res.data.user.role);
 
 toast.success("Login successful 🎉");
 
 setIsLoggedIn(true);
 
-/* ================= REDIRECT ================= */
-
-if(role === "admin"){
+if(res.data.user.role==="admin"){
 navigate("/admin");
 }else{
 navigate("/");
 }
 
-}
-catch(err){
+}catch(err){
 
-const message = err.response?.data?.message;
-
-if(message === "User not found"){
-toast.error("User not registered. Please register first!");
-}
-else if(message === "Invalid password"){
-toast.error("Incorrect password ❌");
-}
-else{
-toast.error("Login failed. Please try again.");
-}
+toast.error(
+err.response?.data?.message || "Login failed"
+);
 
 }
-finally{
+
 setLoading(false);
-}
 
 };
 
-return (
+return(
 
 <div className="auth-page">
 
 <div className="auth-card">
 
-<h2 className="auth-title">Login</h2>
+<h2 className="auth-title">Welcome Back</h2>
 
-<form onSubmit={handleSubmit}>
+<p className="auth-sub">
+Login to continue ordering food
+</p>
+
+<form className="auth-form" onSubmit={handleSubmit}>
 
 <div className="form-group">
 
@@ -86,6 +69,7 @@ return (
 
 <input
 type="email"
+placeholder="Enter email"
 value={email}
 onChange={(e)=>setEmail(e.target.value)}
 required
@@ -99,6 +83,7 @@ required
 
 <input
 type="password"
+placeholder="Enter password"
 value={password}
 onChange={(e)=>setPassword(e.target.value)}
 required
@@ -106,9 +91,9 @@ required
 
 </div>
 
-<button 
+<button
 className="auth-btn"
-type="submit" 
+type="submit"
 disabled={loading}
 >
 
@@ -117,16 +102,18 @@ disabled={loading}
 </button>
 
 <p className="auth-switch">
+
 New user?
-</p>
 
 <button
 type="button"
 className="link-btn"
 onClick={()=>navigate("/register")}
 >
-Register
+Create account
 </button>
+
+</p>
 
 </form>
 

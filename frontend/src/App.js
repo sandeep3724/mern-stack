@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { QRCodeCanvas } from "qrcode.react";
 import emailjs from "@emailjs/browser";
 
+
 function App() {
 
 const API = "https://mern-stack-qrcp.onrender.com/api";
@@ -51,6 +52,7 @@ const [cart,setCart] = useState([]);
 const [search,setSearch] = useState("");
 const [showPayment,setShowPayment] = useState(false);
 const [email,setEmail] = useState("");
+
 
 /* ================= TOTAL ================= */
 
@@ -254,33 +256,26 @@ i._id===id
 
 const placeOrder = async () => {
 
-if(cart.length === 0){
-toast.warning("Cart empty");
-return;
-}
-
-if(!email){
-toast.warning("Enter email first");
+if(cart.length===0){
+toast.error("Cart empty");
 return;
 }
 
 const orderData = {
- items: cart.map(item=>({
-   name:item.name,
-   price:item.price,
-   quantity:item.quantity,
-   email:email
- })),
- totalAmount
+items: cart.map(item=>({
+name:item.name,
+price:item.price,
+quantity:item.quantity,
+email:email
+})),
+totalAmount
 };
 
 try{
 
-await axios.post(`${API}/orders`,orderData);
+const res = await axios.post(`${API}/orders`,orderData);
 
-sendEmail();
-
-toast.success("Order placed successfully 🎉");
+toast.success(`Order placed 🎉 ID: ${res.data._id}`);
 
 setCart([]);
 setShowPayment(false);

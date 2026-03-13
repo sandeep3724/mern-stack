@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 
 function Register(){
 
 const navigate = useNavigate();
 
-const [name,setName] = useState("");
-const [email,setEmail] = useState("");
-const [password,setPassword] = useState("");
-const [loading,setLoading] = useState(false);
+const [name,setName]=useState("");
+const [email,setEmail]=useState("");
+const [password,setPassword]=useState("");
+const [loading,setLoading]=useState(false);
 
-const handleRegister = async(e)=>{
+const handleRegister=async(e)=>{
 
 e.preventDefault();
 
@@ -28,27 +27,19 @@ await axios.post(
 
 toast.success("Registration successful 🎉");
 
-/* redirect to login after 1 second */
-
 setTimeout(()=>{
 navigate("/login");
-},1000);
+},800);
 
 }catch(err){
 
-const message = err.response?.data?.message;
+toast.error(
+err.response?.data?.message || "Registration failed"
+);
 
-if(message === "User already exists"){
-toast.error("User already exists ❌");
-}else{
-toast.error("Registration failed");
 }
-
-}finally{
 
 setLoading(false);
-
-}
 
 };
 
@@ -58,9 +49,15 @@ return(
 
 <div className="auth-card">
 
-<h2 className="auth-title">Register</h2>
+<h2 className="auth-title">
+Create Account
+</h2>
 
-<form onSubmit={handleRegister}>
+<p className="auth-sub">
+Join and start ordering food
+</p>
+
+<form className="auth-form" onSubmit={handleRegister}>
 
 <div className="form-group">
 
@@ -68,6 +65,7 @@ return(
 
 <input
 type="text"
+placeholder="Enter name"
 value={name}
 onChange={(e)=>setName(e.target.value)}
 required
@@ -81,6 +79,7 @@ required
 
 <input
 type="email"
+placeholder="Enter email"
 value={email}
 onChange={(e)=>setEmail(e.target.value)}
 required
@@ -94,6 +93,7 @@ required
 
 <input
 type="password"
+placeholder="Enter password"
 value={password}
 onChange={(e)=>setPassword(e.target.value)}
 required
@@ -101,15 +101,19 @@ required
 
 </div>
 
-<button className="auth-btn" type="submit" disabled={loading}>
+<button
+className="auth-btn"
+type="submit"
+disabled={loading}
+>
 
-{loading ? "Registering..." : "Register"}
+{loading ? "Creating..." : "Register"}
 
 </button>
 
 <p className="auth-switch">
-Already have an account?
-</p>
+
+Already have account?
 
 <button
 type="button"
@@ -119,11 +123,11 @@ onClick={()=>navigate("/login")}
 Login
 </button>
 
+</p>
+
 </form>
 
 </div>
-
-<ToastContainer position="top-right" autoClose={2000}/>
 
 </div>
 
